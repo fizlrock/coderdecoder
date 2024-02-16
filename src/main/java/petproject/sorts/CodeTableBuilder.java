@@ -13,6 +13,69 @@ import java.util.stream.Collectors;
 public class CodeTableBuilder {
 
   /**
+   * @param line
+   * @return
+   */
+  public static Map<Character, String> buildTableHuffman(String line) {
+
+    var table = new HashMap<Character, String>();
+    var letter_apriority = countLetter(line);
+
+    class Node {
+
+      Node(Entry<Character, Integer> e) {
+        this.appriority = e.getValue();
+        this.letter = e.getKey();
+      }
+
+      Node(int appriority) {
+        this.appriority = appriority;
+      }
+
+      int appriority;
+
+      public int getAppriority() {
+        return appriority;
+      }
+
+      Node left, right;
+      Character letter;
+
+      void buildTable(String buffer) {
+        if (letter != null) {
+          table.put(letter, buffer);
+        } else {
+          left.buildTable(buffer + "1");
+          right.buildTable(buffer + "0");
+        }
+      }
+
+    }
+
+    Comparator<Node> c = Comparator.comparing(Node::getAppriority);
+
+    List<Node> nodes = letter_apriority.entrySet().stream()
+        .map(Node::new)
+        .sorted(c)
+        .collect(Collectors.toList());
+
+    while (nodes.size() > 1) {
+      Node n1, n2, s;
+      n1 = nodes.removeFirst();
+      n2 = nodes.removeFirst();
+      s = new Node(n1.appriority + n2.appriority);
+      s.right = n1;
+      s.left = n2;
+      nodes.add(s);
+      nodes.sort(c);
+    }
+
+    nodes.removeLast().buildTable("");
+
+    return table;
+  }
+
+  /**
    * Метод строит таблицу кодирования-декодирования методом Шеннона-Фано
    * 
    * @param line
@@ -64,8 +127,12 @@ public class CodeTableBuilder {
   }
 
   public static String formatTable(Map<Character, String> table) {
+    Comparator<Entry<Character, String>> c = Comparator
+        .comparing((Entry<Character, String> e) -> e.getValue().length())
+        .thenComparing(e -> Integer.parseInt(e.getValue(), 2));
+
     return table.entrySet().stream()
-        .sorted(Comparator.comparing(e -> Integer.parseInt(e.getValue(), 2)))
+        .sorted(c)
         .map(e -> String.format("letter: %s key:%s", e.getKey(), e.getValue()))
         .collect(Collectors.joining("\n"));
   }
@@ -134,6 +201,13 @@ public class CodeTableBuilder {
       counter++;
       result.put(ch, counter);
     }
+
+    Map<Character, Double> app = new HashMap<>();
+
+    result.entrySet().forEach((Entry<Character, Integer> e) -> {
+      app.put(e.getKey(), (double) e.getValue() / line.length());
+    });
+    System.out.println(app);
 
     return result;
   }

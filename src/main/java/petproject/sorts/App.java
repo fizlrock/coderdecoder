@@ -12,8 +12,10 @@ import java.util.stream.Stream;
 public class App {
   public static void main(String[] args) {
     System.out.println("hey hey");
-    var table = CodeTableBuilder.buildTableFano("НО ВРЕДЕН СЕВЕР ДЛЯ МЕНЯ. КОГДА ЖЕ ЮНОСТИ МЯТЕЖНОЙ");
+    var table = CodeTableBuilder.buildTableHuffman("AAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCDDDDDDDDDDDDDDDDEEEEEEEEEEFFFFFFFFFFGGGGHH");
     System.out.println(CodeTableBuilder.formatTable(table));
+
+    
 
   }
 }
