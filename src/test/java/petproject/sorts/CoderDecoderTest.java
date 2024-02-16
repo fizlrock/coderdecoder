@@ -23,7 +23,7 @@ public class CoderDecoderTest {
 
   @Test
   void countLettersTest() {
-    var result = ShannonFanoCode.countLetter("aaabbcd");
+    var result = CodeTableBuilder.countLetter("aaabbcd");
 
     Map<Character, Integer> expected = Map.of(
         'a', 3,
@@ -38,7 +38,7 @@ public class CoderDecoderTest {
   @MethodSource()
   void shannonSpliterTest(List<Integer> appriority, int expected_index) {
 
-   int index = ShannonFanoCode.splitSection(appriority);
+   int index = CodeTableBuilder.splitSection(appriority);
     
     assertEquals(expected_index, index,
        String.format("expected %d but was %d in %s", expected_index, index, appriority));

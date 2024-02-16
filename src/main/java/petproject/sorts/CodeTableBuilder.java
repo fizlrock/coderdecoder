@@ -10,20 +10,10 @@ import java.util.Map.Entry;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class ShannonFanoCode {
-
-  public String code(String line) {
-    throw new RuntimeException();
-
-  }
-
-  public String decode(String line) {
-    throw new RuntimeException();
-
-  }
+public class CodeTableBuilder {
 
   /**
-   * Метод строит таблицуу кодирования-декодирования методом Шеннона-Фано
+   * Метод строит таблицу кодирования-декодирования методом Шеннона-Фано
    * 
    * @param line
    * @return

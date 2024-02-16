@@ -12,13 +12,8 @@ import java.util.stream.Stream;
 public class App {
   public static void main(String[] args) {
     System.out.println("hey hey");
-    var table = ShannonFanoCode.buildTableFano("НО ВРЕДЕН СЕВЕР ДЛЯ МЕНЯ. КОГДА ЖЕ ЮНОСТИ МЯТЕЖНОЙ");
-
-    table.entrySet().stream()
-        //.sorted(Comparator.comparing(e -> Integer.parseInt(e.getValue(), 2)))
-        .sorted(Comparator.comparing(e -> e.getValue().length()))
-        .map(e -> String.format("letter: %s key:%s", e.getKey(), e.getValue()))
-        .forEach(System.out::println);
+    var table = CodeTableBuilder.buildTableFano("НО ВРЕДЕН СЕВЕР ДЛЯ МЕНЯ. КОГДА ЖЕ ЮНОСТИ МЯТЕЖНОЙ");
+    System.out.println(CodeTableBuilder.formatTable(table));
 
   }
 }
