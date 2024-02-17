@@ -7,55 +7,91 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.Stack;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class CodeTableBuilder {
 
+  static class Node {
+
+
+    public Node(double probability, char letter){
+      this.probability = probability;
+      this.letter = letter;
+    }
+    public Node(double appriority) {
+      this.probability = appriority;
+    }
+
+    public final double probability;
+
+    public double getProbability() {
+      return probability;
+    }
+
+    Node left, right;
+    Character letter;
+
+
+  }
+
+  public static String formatTree(Node root) {
+    StringJoiner sj = new StringJoiner("\n");
+
+    sj.add("digraph BST {");
+    Consumer<Node> formater = new Consumer<CodeTableBuilder.Node>() {
+      @Override
+      public void accept(Node n) {
+
+        if (n.letter == null) {
+          sj.add(String.format("%d [label=\"%.2f\"]", this.hashCode(), n.probability));
+          sj.add(String.format("%d -> %d", this.hashCode(), n.left.hashCode()));
+          sj.add(String.format("%d -> %d", this.hashCode(), n.right.hashCode()));
+          this.accept(n.left);
+          this.accept(n.right);
+        } else
+          sj.add(String.format("%d [label=\"%s %.2f\"]", this.hashCode(), n.letter, n.probability));
+      }
+    };
+    formater.accept(root);
+
+    sj.add("}");
+    return sj.toString();
+  }
+
+  public static Map<Character, String> buildHuffmanTable(Node root) {
+    var table = new HashMap<Character, String>();
+
+    BiConsumer<Node, String> table_builder = new BiConsumer<CodeTableBuilder.Node, String>() {
+      @Override
+      public void accept(Node n, String buffer) {
+        if (n.letter != null)
+          table.put(n.letter, buffer);
+        else {
+          this.accept(n.left, buffer + "1");
+          this.accept(n.right, buffer + "0");
+        }
+      }
+    };
+    table_builder.accept(root, "");
+
+    return table;
+  }
+
   /**
+   * Метод строит бинарное дерево для кодирования Хаффмана
+   * 
    * @param line
    * @return
    */
-  public static Map<Character, String> buildTableHuffman(String line) {
-
-    var table = new HashMap<Character, String>();
-    var letter_apriority = countLetter(line);
-
-    class Node {
-
-      Node(Entry<Character, Integer> e) {
-        this.appriority = e.getValue();
-        this.letter = e.getKey();
-      }
-
-      Node(int appriority) {
-        this.appriority = appriority;
-      }
-
-      int appriority;
-
-      public int getAppriority() {
-        return appriority;
-      }
-
-      Node left, right;
-      Character letter;
-
-      void buildTable(String buffer) {
-        if (letter != null) {
-          table.put(letter, buffer);
-        } else {
-          left.buildTable(buffer + "1");
-          right.buildTable(buffer + "0");
-        }
-      }
-
-    }
-
-    Comparator<Node> c = Comparator.comparing(Node::getAppriority);
-
-    List<Node> nodes = letter_apriority.entrySet().stream()
-        .map(Node::new)
+  public static Node buildHuffmanTree(String line) {
+    var letter_counters = countLetter(line);
+    Comparator<Node> c = Comparator.comparing(Node::getProbability);
+    List<Node> nodes = letter_counters.entrySet().stream()
+        .map(e-> new Node((double)e.getValue() / line.length(), e.getKey()))
         .sorted(c)
         .collect(Collectors.toList());
 
@@ -63,16 +99,14 @@ public class CodeTableBuilder {
       Node n1, n2, s;
       n1 = nodes.removeFirst();
       n2 = nodes.removeFirst();
-      s = new Node(n1.appriority + n2.appriority);
+      s = new Node(n1.probability + n2.probability);
       s.right = n1;
       s.left = n2;
       nodes.add(s);
       nodes.sort(c);
     }
-
-    nodes.removeLast().buildTable("");
-
-    return table;
+    var root = nodes.removeFirst();
+    return root;
   }
 
   /**
@@ -95,7 +129,6 @@ public class CodeTableBuilder {
 
     while (!to_check.isEmpty()) {
       var current = to_check.pop();
-      System.out.printf("Разбивка %s \n", current);
 
       if (current.size() < 2)
         continue;
@@ -121,8 +154,6 @@ public class CodeTableBuilder {
         adding_code = "1";
       }
     }
-
-    //
     return table;
   }
 
@@ -201,13 +232,6 @@ public class CodeTableBuilder {
       counter++;
       result.put(ch, counter);
     }
-
-    Map<Character, Double> app = new HashMap<>();
-
-    result.entrySet().forEach((Entry<Character, Integer> e) -> {
-      app.put(e.getKey(), (double) e.getValue() / line.length());
-    });
-    System.out.println(app);
 
     return result;
   }
