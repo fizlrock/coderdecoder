@@ -1,6 +1,8 @@
 
 package petproject.sorts;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +19,11 @@ public class CodeTableBuilder {
 
   static class Node {
 
-
-    public Node(double probability, char letter){
+    public Node(double probability, char letter) {
       this.probability = probability;
       this.letter = letter;
     }
+
     public Node(double appriority) {
       this.probability = appriority;
     }
@@ -35,25 +37,32 @@ public class CodeTableBuilder {
     Node left, right;
     Character letter;
 
-
   }
 
+  /**
+   * Представляет бинарное дерево на языке dot
+   * 
+   * @param root
+   * @return
+   */
   public static String formatTree(Node root) {
     StringJoiner sj = new StringJoiner("\n");
 
     sj.add("digraph BST {");
+
     Consumer<Node> formater = new Consumer<CodeTableBuilder.Node>() {
       @Override
       public void accept(Node n) {
 
         if (n.letter == null) {
-          sj.add(String.format("%d [label=\"%.2f\"]", this.hashCode(), n.probability));
-          sj.add(String.format("%d -> %d", this.hashCode(), n.left.hashCode()));
-          sj.add(String.format("%d -> %d", this.hashCode(), n.right.hashCode()));
+          sj.add(String.format("%d [label=\"%.2f\"]", n.hashCode(), n.probability));
+          sj.add(String.format("%d -> %d", n.hashCode(), n.left.hashCode()));
+          sj.add(String.format("%d -> %d", n.hashCode(), n.right.hashCode()));
           this.accept(n.left);
           this.accept(n.right);
         } else
-          sj.add(String.format("%d [label=\"%s %.2f\"]", this.hashCode(), n.letter, n.probability));
+          sj.add(String.format("%d [label=\"%s %.2f\", style=filled, fillcolor=\"#78f7c2\"]", n.hashCode(), n.letter,
+              n.probability));
       }
     };
     formater.accept(root);
@@ -91,7 +100,7 @@ public class CodeTableBuilder {
     var letter_counters = countLetter(line);
     Comparator<Node> c = Comparator.comparing(Node::getProbability);
     List<Node> nodes = letter_counters.entrySet().stream()
-        .map(e-> new Node((double)e.getValue() / line.length(), e.getKey()))
+        .map(e -> new Node((double) e.getValue() / line.length(), e.getKey()))
         .sorted(c)
         .collect(Collectors.toList());
 
@@ -203,13 +212,20 @@ public class CodeTableBuilder {
   public static Map<Character, String> buildTableUneven(String line) {
 
     var letter_apriority = countLetter(line);
-    var gen = new UnevenWordIterator();
+    var codes = new String[] { "100", "1000", "1100", "10000", "10100", "11000", "11100", "101000", "101100",
+        "110000", "110100", "111000", "111100", "1010000", "1010100", "1011000", "1011100", "1101000", "1101100",
+        "1110000", "1110100", "1111000", "1111100", "10101000", "10101100", "10110000", "10110100", "10111000",
+        "10111100", "11010000", "11011000" };
+
+    var iterator = Arrays.stream(codes).iterator();
+
     var result = new HashMap<Character, String>();
+    result.put(' ', "000");
+    letter_apriority.remove(' ');
 
     letter_apriority.entrySet().stream()
-        .sorted(Comparator.comparing(Entry::getValue))
-        .map(Entry::getKey)
-        .forEach(k -> result.put(k, gen.next()));
+        .sorted(Comparator.comparing(Entry::getValue, Comparator.reverseOrder()))
+        .forEach(e -> result.put(e.getKey(), iterator.next()));
 
     return result;
   }
