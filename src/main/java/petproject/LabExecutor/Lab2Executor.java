@@ -1,5 +1,5 @@
 
-package petproject.sorts;
+package petproject.LabExecutor;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 public class Lab2Executor {
 
@@ -74,7 +74,11 @@ public class Lab2Executor {
   public static LabReport executeLab(VersionOfLab lab) {
     // Добавить декодер для не равномерного кода
     String fanoDecoded, unevenDecoded;
-    fanoDecoded = CoderDecoder.getDefaultShannonCoderDecoder().decode(lab.line2);
+    try {
+      fanoDecoded = CoderDecoder.getDefaultShannonCoderDecoder().decode(lab.line2);
+    } catch (Exception e) {
+      fanoDecoded = "тут произошла ошибка, декоруйте сами";
+    }
     unevenDecoded = CoderDecoder.decodeUneven(lab.line1);
 
     Map<Character, String> unevenTable, fanoTable, huffmanTable;

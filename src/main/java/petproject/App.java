@@ -1,12 +1,10 @@
-package petproject.sorts;
+
+package petproject;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import static petproject.sorts.Lab2Executor.LabReport;
+
+import petproject.LabExecutor.Lab2Executor;
+import petproject.LabExecutor.Lab2Executor.LabReport;
 
 /**
  * Hello world!
@@ -28,8 +26,6 @@ public class App {
     }
 
     Lab2Executor.writeReports(reports, "output");
-    reports.stream().map(LabReport::unevenDecoded).forEach(System.out::println);;
-
 
   }
 }

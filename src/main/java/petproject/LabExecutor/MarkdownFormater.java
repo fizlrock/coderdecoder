@@ -1,11 +1,10 @@
 
-package petproject.sorts;
+package petproject.LabExecutor;
 
 import java.util.Comparator;
 import java.util.Map;
-import java.util.StringJoiner;
 import java.util.Map.Entry;
-import java.util.stream.Collector;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class MarkdownFormater {
@@ -57,7 +56,6 @@ public class MarkdownFormater {
 
     l2 = "|" + new String(new char[keys.size()]).replace("\0", " --- |");
     l3 = "| " + String.join(" | ", values) + " |";
-
 
     return l1 + "\n" + l2 + "\n" + l3;
   }

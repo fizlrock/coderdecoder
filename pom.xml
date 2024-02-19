@@ -112,7 +112,7 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.2.1</version>
 					<configuration>
-						<mainClass>petproject.sorts.App</mainClass>
+						<mainClass>petproject.App</mainClass>
 						<arguments>
 						</arguments>
 					</configuration>

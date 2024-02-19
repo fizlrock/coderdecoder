@@ -1,5 +1,5 @@
 
-package petproject.sorts;
+package petproject.LabExecutor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +35,8 @@ public class UniversalCodes {
     return result;
   }
 
-  public static Map<String, String> getCodes(int value){
-    Map<String, String> result = new HashMap<>();    
+  public static Map<String, String> getCodes(int value) {
+    Map<String, String> result = new HashMap<>();
     result.put("Гамма-код", getEliasGammaCode(value));
     result.put("Дельта-код", getEliasDeltaCode(value));
     result.put("Омега-код", getEliasOmegaCode(value));

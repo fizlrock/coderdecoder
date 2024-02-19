@@ -1,14 +1,12 @@
 
-package petproject.sorts;
+package petproject.LabExecutor;
 
 import static java.util.Map.entry;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -66,17 +64,14 @@ public class CoderDecoder {
   }
 
   public static String decodeUneven(String line) {
-    System.out.println(line);
     line = line.replace("000001", "00&fuck&1");
     line = line.replace("001", "00&1");
     var codes = Arrays.asList(line.split("&"));
     var result = codes.stream().map(unevenDecodeTable::get).collect(Collectors.joining());
-    System.out.println(result);
     return result;
   }
 
-
-    public static CoderDecoder getDefaultShannonCoderDecoder() {
+  public static CoderDecoder getDefaultShannonCoderDecoder() {
     return new CoderDecoder(defaultShannonCodes) {
       @Override
       public String code(String line) {
