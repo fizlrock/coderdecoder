@@ -3,6 +3,7 @@ package petproject;
 
 import java.util.ArrayList;
 
+import petproject.LabExecutor.ArithmeticCoding;
 import petproject.LabExecutor.Lab2Executor;
 import petproject.LabExecutor.Lab2Executor.LabReport;
 
@@ -12,6 +13,12 @@ import petproject.LabExecutor.Lab2Executor.LabReport;
  */
 public class App {
   public static void main(String[] args) {
+    var line = "колокольня";
+
+    ArithmeticCoding.code(line);
+  }
+
+  static void executeLab2() {
 
     var labs = Lab2Executor.loadLabs();
     // labs.forEach(System.out::println);;

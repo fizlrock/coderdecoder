@@ -96,7 +96,7 @@ public class CodeTableBuilder {
    * @return
    */
   public static Node buildHuffmanTree(String line) {
-    var letter_counters = countLetter(line);
+    var letter_counters = countLetters(line);
     Comparator<Node> c = Comparator.comparing(Node::getProbability);
     List<Node> nodes = letter_counters.entrySet().stream()
         .map(e -> new Node((double) e.getValue() / line.length(), e.getKey()))
@@ -126,7 +126,7 @@ public class CodeTableBuilder {
   public static Map<Character, String> buildTableFano(String line) {
     var table = new HashMap<Character, String>();
 
-    var letter_apriority = countLetter(line);
+    var letter_apriority = countLetters(line);
     var sorted_letters = letter_apriority.entrySet().stream()
         .sorted(Comparator.comparing(Entry::getValue))
         .collect(Collectors.toList());
@@ -210,7 +210,7 @@ public class CodeTableBuilder {
    */
   public static Map<Character, String> buildTableUneven(String line) {
 
-    var letter_apriority = countLetter(line);
+    var letter_apriority = countLetters(line);
     var codes = new String[] { "100", "1000", "1100", "10000", "10100", "11000", "11100", "101000", "101100",
         "110000", "110100", "111000", "111100", "1010000", "1010100", "1011000", "1011100", "1101000", "1101100",
         "1110000", "1110100", "1111000", "1111100", "10101000", "10101100", "10110000", "10110100", "10111000",
@@ -235,7 +235,7 @@ public class CodeTableBuilder {
    * @param line
    * @return
    */
-  public static Map<Character, Integer> countLetter(String line) {
+  public static Map<Character, Integer> countLetters(String line) {
     Map<Character, Integer> result = new HashMap<>();
 
     for (int i = 0; i < line.length(); i++) {
@@ -251,4 +251,12 @@ public class CodeTableBuilder {
     return result;
   }
 
+  public static Map<Character, Double> calcProbability(String line) {
+    var letter_count_table = countLetters(line);
+    var result = new HashMap<Character, Double>();
+    letter_count_table.forEach((letter, count) -> {
+      result.put(letter, (double) count / line.length());
+    });
+    return result;
+  }
 }
