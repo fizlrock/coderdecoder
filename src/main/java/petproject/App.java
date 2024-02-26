@@ -12,10 +12,12 @@ import petproject.LabExecutor.Lab2Executor.LabReport;
  *
  */
 public class App {
+
   public static void main(String[] args) {
     var line = "колокольня";
+    var report = ArithmeticCoding.code(line);
+    System.out.println(report);
 
-    ArithmeticCoding.code(line);
   }
 
   static void executeLab2() {
