@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import petproject.LabExecutor.ArithmeticCoding;
 import petproject.LabExecutor.Lab2Executor;
 import petproject.LabExecutor.Lab2Executor.LabReport;
+import petproject.ReplaceDecoder.Decoder;
 
 /**
  * Hello world!
@@ -14,10 +15,8 @@ import petproject.LabExecutor.Lab2Executor.LabReport;
 public class App {
 
   public static void main(String[] args) {
-    var line = "колокольня";
-    var report = ArithmeticCoding.code(line);
-    System.out.println(report);
-
+    var d = new Decoder();
+    d.decode("SP R4UMBI ISOYDS S LMESRB, E13SRB, PM5NEB, M Q UBZIMJ SKBTDSF1TIPSU TO45BPNN EBONDSW NRBB, S ASREN3B.");
   }
 
   static void executeLab2() {

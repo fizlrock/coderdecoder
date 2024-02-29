@@ -141,8 +141,18 @@ public class Lab2Executor {
     mdReport.add(
         "### Задание 2. Для символов фразы C построить таблицы неравномерного кода, кода Шеннона-Фано и кода Хаффмана.");
     mdReport.add("Исходная строка: " + report.version.line3 + "\n");
-    mdReport.add(MarkdownFormater.formatTables(report.unevenTable, report.fanoTable, report.huffmanTable));
+    var probability = CodeTableBuilder.calcProbability(report.version().line3);
+    mdReport.add(MarkdownFormater.formatTables(report.unevenTable, report.fanoTable, report.huffmanTable, probability));
 
+    mdReport.add("\n\n\n");
+    mdReport.add(
+        "### Задание 3. Расчет энтропии, символов на букву и среднюю информацию");
+    mdReport.add(MarkdownFormater.formatEntropyFormul(probability));
+    mdReport.add(MarkdownFormater.formatKFormul(report.fanoTable, probability, "фано"));
+    mdReport.add(MarkdownFormater.formatKFormul(report.huffmanTable, probability, "хаффман"));
+    mdReport.add(MarkdownFormater.formatKFormul(report.unevenTable, probability, "неравномерный код"));
+
+    
     mdReport.add("### Задание 4. Построить гамма-код, дельта-код и омега-код Элиаса для чисел из таблицы с заданием.");
     mdReport.add(MarkdownFormater.formatFlatTable(UniversalCodes.getCodes(report.version.number)));
 

@@ -1,0 +1,25 @@
+
+CodeReport[
+input_line=колокольня,
+result=3312221,
+probability={к=0.2, л=0.2, ь=0.1, н=0.1, о=0.3, я=0.1},
+steps=[
+	CodingStep[letter=к, delta=1.0, min=0.3, max=0.5], 
+	CodingStep[letter=о, delta=0.2, min=0.3, max=0.36], 
+	CodingStep[letter=л, delta=0.06, min=0.32999999999999996, max=0.34199999999999997], 
+	CodingStep[letter=о, delta=0.01200000000000001, min=0.32999999999999996, max=0.33359999999999995], 
+	CodingStep[letter=к, delta=0.003599999999999992, min=0.33107999999999993, max=0.3318], 
+	CodingStep[letter=о, delta=7.200000000000539E-4, min=0.33107999999999993, max=0.3312959999999999], 
+	CodingStep[letter=л, delta=2.1599999999999397E-4, min=0.3311879999999999, max=0.33123119999999995], 
+	CodingStep[letter=ь, delta=4.3200000000021E-5, min=0.33121823999999994, max=0.33122255999999994], 
+	CodingStep[letter=н, delta=4.3200000000021E-6, min=0.33122169599999995, max=0.33122212799999995], 
+	CodingStep[letter=я, delta=4.319999999946589E-7, min=0.3312220847999999, max=0.33122212799999995]
+],
+ranges={
+	к=Range[start=0.3, stop=0.5], 
+	л=Range[start=0.5, stop=0.7], 
+	ь=Range[start=0.7, stop=0.7999999999999999], 
+	н=Range[start=0.7999999999999999, stop=0.8999999999999999], 
+	о=Range[start=0.0, stop=0.3], 
+	я=Range[start=0.8999999999999999, stop=0.9999999999999999]
+}]

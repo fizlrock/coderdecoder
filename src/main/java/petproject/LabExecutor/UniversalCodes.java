@@ -10,8 +10,9 @@ public class UniversalCodes {
       throw new IllegalArgumentException("Гамма код Элиаса можно составить только для положительного числа");
 
     String result = Integer.toString(value, 2);
-    var zeros = new String(new char[result.length() - 1]).replace("\0", " ");
-    result = zeros + result;
+    int zeros_count = result.length() - 1;
+    for (int i = 0; i < zeros_count; i++)
+      result = "0" + result;
 
     return result;
   }

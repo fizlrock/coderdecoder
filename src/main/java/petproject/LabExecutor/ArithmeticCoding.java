@@ -49,8 +49,6 @@ public class ArithmeticCoding {
     double base = Double.parseDouble("0." + text_base);
     n++;
 
-    int limit = 5;
-
     while (!i.contains(base)) {
       System.out.println(base);
       base += Math.pow(10, -n);
@@ -58,13 +56,7 @@ public class ArithmeticCoding {
         base -= Math.pow(1, -n);
         n++;
       }
-
-      limit--;
-      if (limit == 0)
-        break;
     }
-    System.out.println(base);
-
     return base;
   }
 
