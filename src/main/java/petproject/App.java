@@ -15,14 +15,11 @@ import petproject.ReplaceDecoder.Decoder;
 public class App {
 
   public static void main(String[] args) {
-    var d = new Decoder();
-    d.decode("SP R4UMBI ISOYDS S LMESRB, E13SRB, PM5NEB, M Q UBZIMJ SKBTDSF1TIPSU TO45BPNN EBONDSW NRBB, S ASREN3B.");
   }
 
   static void executeLab2() {
 
     var labs = Lab2Executor.loadLabs();
-    // labs.forEach(System.out::println);;
     var reports = new ArrayList<LabReport>();
     for (var lab : labs) {
       try {
